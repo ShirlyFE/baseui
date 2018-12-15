@@ -73,6 +73,7 @@ export type CalendarPropsT = {
   onSelect: ({date: Date}) => void,
   peekNextMonth: boolean,
   selected: ?Date,
+  setActiveState: boolean => void,
 };
 
 export type HeaderPropsT = CalendarPropsT & {
@@ -91,7 +92,10 @@ export type SharedStylePropsT = {
 export type StateChangeTypeT = ?$Values<typeof STATE_CHANGE_TYPE>;
 
 export type CalendarStateT = {
-  highlightedDate: ?Date,
+  highlightedDate?: ?Date,
+  isActive?: boolean,
+  lastHighlightedDate?: Date,
+  value?: ?Date,
 };
 
 export type StateReducerT = (
@@ -106,5 +110,12 @@ export type StatefulContainerPropsT = {
   stateReducer: StateReducerT,
   onDayMouseOver: (params: {date: Date, event: Event}) => void,
   onDayMouseLeave: (params: {date: Date, event: Event}) => void,
-  selected: Date,
+  onSelect: ({date: Date}) => void,
 };
+
+export type StatefulDatepickerPropsT = $Diff<
+  StatefulContainerPropsT,
+  {
+    children: CalendarPropsT => React.Node,
+  },
+>;
